@@ -65,13 +65,13 @@ impl FromStr for Person {
         if list[0].is_empty(){
             return Err(ParsePersonError::NoName)
         }
-        if let Ok(age) = list[1].parse::<usize>(){
-            return Ok(Person {
+        match list[1].parse::<usize>(){
+            Ok(age) => return Ok(Person {
                 name: String::from(list[0]),
                 age,
-            });
+            }),
+            Err(e) => Err(ParsePersonError::ParseInt(e))
         }
-        Err(ParsePersonError::ParseInt(_))
     }
 }
 
